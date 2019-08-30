@@ -166,8 +166,10 @@ export default class Row extends Component {
   render() {
     const {children, style, horizontal} = this.props;
     const rowStyle = [
-      style, styles.container, this._animatedLocation.getLayout(),
-      horizontal ? styles.horizontalContainer : styles.verticalContainer,
+      styles.container, 
+      this._animatedLocation.getLayout(),
+      horizontal ? styles.horizontalContainer : styles.verticalContainer, 
+      style,
     ];
 
     return (

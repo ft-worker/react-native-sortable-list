@@ -30,6 +30,9 @@ export default class SortableList extends Component {
     rowActivationTime: PropTypes.number,
     manuallyActivateRows: PropTypes.bool,
 
+    rowStyle: ViewPropTypes.style,
+    additionalContentHeight: PropTypes.number,
+
     renderRow: PropTypes.func.isRequired,
     renderHeader: PropTypes.func,
     renderFooter: PropTypes.func,
@@ -231,7 +234,7 @@ export default class SortableList extends Component {
   }
 
   _renderRows() {
-    const {horizontal, rowActivationTime, sortingEnabled, renderRow} = this.props;
+    const {horizontal, rowActivationTime, sortingEnabled, renderRow, rowStyle} = this.props;
     const {animated, order, data, activeRowKey, releasedRowKey, rowsLayouts} = this.state;
 
 
@@ -267,7 +270,7 @@ export default class SortableList extends Component {
           activationTime={rowActivationTime}
           animated={animated && !active}
           disabled={!sortingEnabled}
-          style={style}
+          style={{...style, ...rowStyle}}
           location={location}
           onLayout={!rowsLayouts ? this._onLayoutRow.bind(this, key) : null}
           onActivate={this._onActivateRow.bind(this, key, index)}
@@ -329,6 +332,8 @@ export default class SortableList extends Component {
             contentHeight += layout.height;
             contentWidth += layout.width;
           });
+
+          contentHeight += this.props.additionalContentHeight ? this.props.additionalContentHeight : contentHeight;
 
           this.setState({
             containerLayout: {x, y, width, height, pageX, pageY},
